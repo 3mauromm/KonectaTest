@@ -111,9 +111,7 @@ public class Servlet extends HttpServlet {
         
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        out.print("<%@page contentType='text/html' pageEncoding='UTF-8'%>"
-                + "<!DOCTYPE html><html>"
-                + "<head>"
+        out.print("<head>"
                 + "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>"
                 + "<title>Respuesta</title>"
                 + "<link href='css/estilos.css' rel='stylesheet'>"

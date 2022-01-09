@@ -12,10 +12,11 @@ public class Mysqlconexion {
     Aqui se deben configurar la URL y credenciales de la base de datos
     */
 
-    // URL, nombre de usuario y contrasena de la base de datos de MySQL
+    // URL, nombre de usuario, contrasena y nombre de la base de datos de MySQL
     public static final String URL = "jdbc:mysql://localhost:3306/konecta";
     public static final String USR = "root";
     public static final String PSW = "root";
+    public final String DB = "konecta.inventario";
 
     public Connection abrirConexion() {
         // Metodo que crear y retorna la conexion con la base de datos de MySQL

@@ -4,6 +4,7 @@
     Author     : 3maur
 --%>
 
+<%@page import="konectatest.Inventario"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="konectatest.Mysqlconexion"%>
@@ -27,7 +28,7 @@
 
                 PreparedStatement ps;
                 ResultSet res;
-                ps = (PreparedStatement) con.prepareStatement("SELECT * FROM konecta.inventario ORDER BY ventas DESC;");
+                ps = (PreparedStatement) con.prepareStatement("SELECT * FROM " + mysqlcon.DB + " ORDER BY ventas DESC;");
                 res = ps.executeQuery();
 
                 if (res.next()) {

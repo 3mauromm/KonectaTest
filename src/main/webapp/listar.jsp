@@ -43,7 +43,9 @@
 
                 PreparedStatement ps;
                 ResultSet res;
-                ps = (PreparedStatement) con.prepareStatement("SELECT * FROM konecta.inventario");
+                System.out.println(mysqlcon.DB);
+                String statement = "SELECT * FROM " + mysqlcon.DB;
+                ps = (PreparedStatement) con.prepareStatement(statement);
                 res = ps.executeQuery();
 
                 if (res.next()) {

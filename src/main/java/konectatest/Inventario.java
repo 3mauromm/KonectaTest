@@ -14,6 +14,7 @@ public class Inventario {
     private PreparedStatement ps;   // Almacena el codigo a enviar a MySQL 
     private ResultSet res;          // Almacena la respuesta de MySQL
     public Connection con = null;   // Almacena la conexion a MySQL
+        public String db;           // Almacena el nombre de la base de datos
 
     public Inventario() {
         // Constructor: Genera la conexion a la base de datos de MySQL
@@ -21,6 +22,7 @@ public class Inventario {
         try {
             Mysqlconexion mysqlcon = new Mysqlconexion();
             this.con = mysqlcon.abrirConexion();
+            db = mysqlcon.DB;
 
         } catch (Exception e) {
             System.out.println("Error en Inventario.java/Inventario(): " + e);
@@ -36,7 +38,7 @@ public class Inventario {
             LocalDateTime date = LocalDateTime.now();
             String fecha = dtf.format(date);
             ps = (PreparedStatement) con.prepareStatement(
-                    "INSERT INTO konecta.inventario (nombre, ref, precio, peso, categoria, cantidad, fecha) "
+                    "INSERT INTO " + db + " (nombre, ref, precio, peso, categoria, cantidad, fecha) "
                     + "VALUES ('" + nombre + "', '" + ref + "', '" + precio + "', '" + peso + "', '" + categoria + "', '" + cantidad + "', '" + fecha + "');");
             ps.executeUpdate();
             System.out.println("Info en Inventario.java/crear_producto(): El producto fue creado");
@@ -55,7 +57,7 @@ public class Inventario {
         String[] aDatos = {nombre, ref, precio, peso, categoria, cantidad};
         String[] aTipos = {"nombre", "ref", "precio", "peso", "categoria", "cantidad"};
         String statement;
-        statement = "UPDATE konecta.inventario SET ";
+        statement = "UPDATE " + db + " SET ";
         for (int i = 0; i < aDatos.length; i++) {
             if (!aDatos[i].equals("")) {
                 statement += aTipos[i] + " = '" + aDatos[i] + "',";
@@ -82,7 +84,7 @@ public class Inventario {
         if (id_existe(id_eliminar)) {
 
             try {
-                ps = (PreparedStatement) con.prepareStatement("DELETE FROM konecta.inventario WHERE (id = " + id_eliminar + ");");
+                ps = (PreparedStatement) con.prepareStatement("DELETE FROM " + db + " WHERE (id = " + id_eliminar + ");");
                 ps.executeUpdate();
                 System.out.println("Info en Inventario.java/eliminarProducto(): ID fue encontrado");
                 return true;
@@ -102,7 +104,7 @@ public class Inventario {
         // Metodo que verificar que un ID exista en la base de datos
 
         try {
-            ps = (PreparedStatement) con.prepareStatement("SELECT id FROM inventario WHERE (id = " + id + ");");
+            ps = (PreparedStatement) con.prepareStatement("SELECT id FROM " + db + " WHERE (id = " + id + ");");
             res = ps.executeQuery();
             return res.next();
 
@@ -116,7 +118,7 @@ public class Inventario {
         // Metodo que recibe el ID de un producto y una cantidad y disminuye su valor Ventas dicha cantidad
 
         try {
-            ps = (PreparedStatement) con.prepareStatement("SELECT cantidad FROM inventario WHERE (id = " + id + ");");
+            ps = (PreparedStatement) con.prepareStatement("SELECT cantidad FROM " + db + " WHERE (id = " + id + ");");
             res = ps.executeQuery();
             res.next();
             int cant_disponible, cant_requerida, cant_restante;
@@ -126,14 +128,14 @@ public class Inventario {
 
             if (cant_restante >= 0) {
                 System.out.println("Info en Inventario.stock_disponible(): La cantidad requerida es menor que la cantidad disponible");
-                ps = (PreparedStatement) con.prepareStatement("SELECT ventas FROM inventario WHERE (id = " + id + ");");
+                ps = (PreparedStatement) con.prepareStatement("SELECT ventas FROM " + db + " WHERE (id = " + id + ");");
                 res = ps.executeQuery();
                 res.next();
                 int ventas, ventas_nueva;
                 ventas = res.getInt("ventas");          // Cantidad de veces que se ha vendido el producto
                 ventas_nueva = ventas + cant_requerida; // Cantidad de veces que se habra vendido el producto luego de la venta
-                ps = (PreparedStatement) con.prepareStatement("UPDATE konecta.inventario "
-                        + "SET cantidad = '" + Integer.toString(cant_restante) + "', "
+                ps = (PreparedStatement) con.prepareStatement("UPDATE " + db
+                        + " SET cantidad = '" + Integer.toString(cant_restante) + "', "
                         + "ventas = '" + Integer.toString(ventas_nueva) + "'"
                         + "WHERE (id = '" + id + "');");
                 ps.executeUpdate();
