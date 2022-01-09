@@ -1,0 +1,54 @@
+
+
+body {
+    background-image: url('../images/background_index.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+h1,h2 {
+    text-align: center;
+    color: white;
+    border: brown;
+    font-family: verdana;
+}
+
+input[type=submit] {
+    width: 160px;
+    padding: 5px 5px;
+    margin: 2px 2px;
+    cursor: pointer;
+    color: brown;
+    background-color: white;
+    border: none;
+    border-radius: 16px;
+    font-size: 12px;
+    font-family: verdana;
+}
+
+input[type=text] {
+    width: 150px;
+    padding: 5px 5px;
+    margin: 2px 2px;
+    color: brown;
+    background-color: white;
+    border: none;
+    border-radius: 16px;
+    font-size: 12px;
+    font-family: verdana;
+}
+
+.texto,p {
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: verdana;
+}
+
+.tabla {
+    cellpaging: 10px;
+    spacing: 5px;
+    margin-left:50%; 
+    transform: translateX(-50%);   
+}
